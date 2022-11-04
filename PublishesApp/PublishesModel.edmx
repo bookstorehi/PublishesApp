@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище ИзданияModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Издания">
+          <Key>
+            <PropertyRef Name="Индекс" />
+          </Key>
+          <Property Name="Индекс" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="Названия" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Тип_издания" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Количество_издания" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Отправления">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Номер_подписки" Type="int" Nullable="false" />
+          <Property Name="Имя_получателя" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Фамилия_получателя" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Отчество_получателя" Type="nvarchar" MaxLength="50" />
+          <Property Name="Должность" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Предполагаемая_дата" Type="date" Nullable="false" />
+          <Property Name="Дата_получения" Type="date" />
+        </EntityType>
+        <EntityType Name="Подписки">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Организация" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Дата_начала" Type="date" Nullable="false" />
+          <Property Name="Дата_окончания" Type="date" Nullable="false" />
+          <Property Name="Стоимость" Type="money" Nullable="false" />
+          <Property Name="Периодичность_выхода" Type="int" Nullable="false" />
+          <Property Name="Способ_доставки" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Индекс_издания" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Отправления_Подписки">
+          <End Role="Подписки" Type="Self.Подписки" Multiplicity="1" />
+          <End Role="Отправления" Type="Self.Отправления" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Подписки">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Отправления">
+              <PropertyRef Name="Номер_подписки" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Подписки_Издания">
+          <End Role="Издания" Type="Self.Издания" Multiplicity="1" />
+          <End Role="Подписки" Type="Self.Подписки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Издания">
+              <PropertyRef Name="Индекс" />
+            </Principal>
+            <Dependent Role="Подписки">
+              <PropertyRef Name="Индекс_издания" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ИзданияModelContainer">
+          <EntitySet Name="Издания" EntityType="Self.Издания" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Отправления" EntityType="Self.Отправления" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Подписки" EntityType="Self.Подписки" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Отправления_Подписки" Association="Self.FK_Отправления_Подписки">
+            <End Role="Подписки" EntitySet="Подписки" />
+            <End Role="Отправления" EntitySet="Отправления" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Подписки_Издания" Association="Self.FK_Подписки_Издания">
+            <End Role="Издания" EntitySet="Издания" />
+            <End Role="Подписки" EntitySet="Подписки" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ИзданияModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Издания">
+          <Key>
+            <PropertyRef Name="Индекс" />
+          </Key>
+          <Property Name="Индекс" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Названия" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Тип_издания" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Количество_издания" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Подписки" Relationship="Self.FK_Подписки_Издания" FromRole="Издания" ToRole="Подписки" />
+        </EntityType>
+        <EntityType Name="Отправления">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Номер_подписки" Type="Int32" Nullable="false" />
+          <Property Name="Имя_получателя" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Фамилия_получателя" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Отчество_получателя" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Должность" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Предполагаемая_дата" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Дата_получения" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Подписки" Relationship="Self.FK_Отправления_Подписки" FromRole="Отправления" ToRole="Подписки" />
+        </EntityType>
+        <EntityType Name="Подписки">
+          <Key>
+            <PropertyRef Name="ИД" />
+          </Key>
+          <Property Name="ИД" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Организация" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Дата_начала" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Дата_окончания" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Стоимость" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Периодичность_выхода" Type="Int32" Nullable="false" />
+          <Property Name="Способ_доставки" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Индекс_издания" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Издания" Relationship="Self.FK_Подписки_Издания" FromRole="Подписки" ToRole="Издания" />
+          <NavigationProperty Name="Отправления" Relationship="Self.FK_Отправления_Подписки" FromRole="Подписки" ToRole="Отправления" />
+        </EntityType>
+        <Association Name="FK_Подписки_Издания">
+          <End Role="Издания" Type="Self.Издания" Multiplicity="1" />
+          <End Role="Подписки" Type="Self.Подписки" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Издания">
+              <PropertyRef Name="Индекс" />
+            </Principal>
+            <Dependent Role="Подписки">
+              <PropertyRef Name="Индекс_издания" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Отправления_Подписки">
+          <End Role="Подписки" Type="Self.Подписки" Multiplicity="1" />
+          <End Role="Отправления" Type="Self.Отправления" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Подписки">
+              <PropertyRef Name="ИД" />
+            </Principal>
+            <Dependent Role="Отправления">
+              <PropertyRef Name="Номер_подписки" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ИзданияEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Издания" EntityType="Self.Издания" />
+          <EntitySet Name="Отправления" EntityType="Self.Отправления" />
+          <EntitySet Name="Подписки" EntityType="Self.Подписки" />
+          <AssociationSet Name="FK_Подписки_Издания" Association="Self.FK_Подписки_Издания">
+            <End Role="Издания" EntitySet="Издания" />
+            <End Role="Подписки" EntitySet="Подписки" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Отправления_Подписки" Association="Self.FK_Отправления_Подписки">
+            <End Role="Подписки" EntitySet="Подписки" />
+            <End Role="Отправления" EntitySet="Отправления" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ИзданияModelContainer" CdmEntityContainer="ИзданияEntities">
+          <EntitySetMapping Name="Издания">
+            <EntityTypeMapping TypeName="ИзданияModel.Издания">
+              <MappingFragment StoreEntitySet="Издания">
+                <ScalarProperty Name="Индекс" ColumnName="Индекс" />
+                <ScalarProperty Name="Названия" ColumnName="Названия" />
+                <ScalarProperty Name="Тип_издания" ColumnName="Тип_издания" />
+                <ScalarProperty Name="Количество_издания" ColumnName="Количество_издания" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Отправления">
+            <EntityTypeMapping TypeName="ИзданияModel.Отправления">
+              <MappingFragment StoreEntitySet="Отправления">
+                <ScalarProperty Name="ИД" ColumnName="ИД" />
+                <ScalarProperty Name="Номер_подписки" ColumnName="Номер_подписки" />
+                <ScalarProperty Name="Имя_получателя" ColumnName="Имя_получателя" />
+                <ScalarProperty Name="Фамилия_получателя" ColumnName="Фамилия_получателя" />
+                <ScalarProperty Name="Отчество_получателя" ColumnName="Отчество_получателя" />
+                <ScalarProperty Name="Должность" ColumnName="Должность" />
+                <ScalarProperty Name="Предполагаемая_дата" ColumnName="Предполагаемая_дата" />
+                <ScalarProperty Name="Дата_получения" ColumnName="Дата_получения" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Подписки">
+            <EntityTypeMapping TypeName="ИзданияModel.Подписки">
+              <MappingFragment StoreEntitySet="Подписки">
+                <ScalarProperty Name="ИД" ColumnName="ИД" />
+                <ScalarProperty Name="Организация" ColumnName="Организация" />
+                <ScalarProperty Name="Дата_начала" ColumnName="Дата_начала" />
+                <ScalarProperty Name="Дата_окончания" ColumnName="Дата_окончания" />
+                <ScalarProperty Name="Стоимость" ColumnName="Стоимость" />
+                <ScalarProperty Name="Периодичность_выхода" ColumnName="Периодичность_выхода" />
+                <ScalarProperty Name="Способ_доставки" ColumnName="Способ_доставки" />
+                <ScalarProperty Name="Индекс_издания" ColumnName="Индекс_издания" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

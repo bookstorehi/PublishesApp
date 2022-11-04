@@ -1,0 +1,50 @@
+﻿<Window x:Class="PublishesApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PublishesApp"
+        mc:Ignorable="d"
+        Title="Издания" Height="450" Width="870" MinHeight="450" MinWidth="870">
+    <DockPanel>
+        <Label DockPanel.Dock="Top" Content="Панель управления изданиями" Margin="10 10 10 0"/>
+        <DockPanel DockPanel.Dock="Top" Margin="10">
+            <StackPanel>
+                <GroupBox Header="Доступные действия">
+                    <StackPanel>
+                        <Button x:Name="izdaniyaBtn" Content="Выбери издание" Click="izdaniyaBtn_Click" IsEnabled="False" Margin="0 5"/>
+                        <Button x:Name="podpiskiBtn" Content="Все подписки" Click="podpiskiBtn_Click" Margin="0 5"/>
+                        <Button x:Name="otpravleniyaBtn" Content="История отправлений" Click="otpravleniyaBtn_Click" Margin="0 5"/>
+                    </StackPanel>
+                </GroupBox>
+                <Label Content="" Name="podpiskaIndex"/>
+            </StackPanel>
+            <DataGrid Margin="10 0 0 0" Height="150" x:Name="izdaniyaGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="izdaniyaGrid_SelectionChanged" SelectionMode="Single">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Индекс" Binding="{Binding Индекс}"/>
+                    <DataGridTextColumn Header="Название" Binding="{Binding Названия}"/>
+                    <DataGridTextColumn Header="Тип" Binding="{Binding Тип_издания}"/>
+                    <DataGridTextColumn Header="Количество" Binding="{Binding Количество}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
+        <DataGrid Margin="10 0 10 10" x:Name="podpiskiGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="podpiskiGrid_SelectionChanged" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Индекс издания" Binding="{Binding Индекс_издания}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Организация" Binding="{Binding Организация}" Width="310"/>
+                <DataGridTextColumn Header="Дата начала" Binding="{Binding Начало}"/>
+                <DataGridTextColumn Header="Дата окончания" Binding="{Binding Конец}"/>
+                <DataGridTextColumn Header="Стоимость" Binding="{Binding Сумма}"/>
+                <DataGridTextColumn Header="Периодичность" Binding="{Binding Периодичность_выхода}"/>
+                <DataGridTextColumn Header="Способ доставки" Binding="{Binding Способ_доставки}" Width="110"/>
+                <DataGridTemplateColumn Header="Подписка">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="delpodpiskaBtn" Content="Отменить" Click="delpodpiskaBtn_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</Window>

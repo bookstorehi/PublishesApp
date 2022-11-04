@@ -1,0 +1,51 @@
+﻿<Window x:Class="PublishesApp.SentsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PublishesApp"
+        mc:Ignorable="d"
+        Title="История отправлений" Height="600" Width="1250" MinHeight="600" MinWidth="600">
+    <DockPanel>
+        <GroupBox Header="Начать отправление">
+            <StackPanel>
+                <Label Content="Подписка"/>
+                <ComboBox Name="podpiskiCmbx" Width="200"/>
+                <GroupBox Header="Получатель">
+                    <StackPanel>
+                        <Label Content="Имя"/>
+                        <TextBox x:Name="firstName"/>
+                        <Label Content="Фамилия"/>
+                        <TextBox x:Name="sureName"/>
+                        <Label Content="Отчество (если есть)"/>
+                        <TextBox x:Name="patronymic"/>
+                        <Label Content="Должность"/>
+                        <TextBox x:Name="role"/>
+                    </StackPanel>
+                </GroupBox>
+                <Label Content="Предполагаемая дата:"/>
+                <DatePicker Name="date"/>
+                <Button x:Name="goBtn" Content="Готово" Margin="0 10" Click="goBtn_Click"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="История отправлений">
+            <StackPanel>
+                <DataGrid x:Name="sentsGrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="sentsGrid_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Организация" Binding="{Binding Организация}"/>
+                        <DataGridTextColumn Header="Издание" Binding="{Binding Издание}"/>
+                        <DataGridTextColumn Header="Получатель" Binding="{Binding Получатель}"/>
+                        <DataGridTextColumn Header="Должность" Binding="{Binding Должность}"/>
+                        <DataGridTextColumn Header="Предполагаемая дата" Binding="{Binding Примерная_дата}"/>
+                        <DataGridTextColumn Header="Дата получения" Binding="{Binding Дата}"/>
+                        <DataGridTextColumn Header="Доставка" Binding="{Binding Доставка}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <DockPanel LastChildFill="False">
+                    <Label Name="sentProperties"/>
+                    <Button DockPanel.Dock="Right" x:Name="savepdf" Content="Сохранить в PDF" Click="savepdf_Click" Margin="10"/>
+                </DockPanel>
+            </StackPanel>
+        </GroupBox>
+    </DockPanel>
+</Window>
