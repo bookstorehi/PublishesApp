@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:PublishesApp"
         mc:Ignorable="d"
         Title="Издания" Height="450" Width="870" MinHeight="450" MinWidth="870">
+    <Window.Resources>
+        <Style TargetType="Label" BasedOn="{StaticResource GreenLabel1}"/>
+    </Window.Resources>
     <DockPanel>
         <Label DockPanel.Dock="Top" Content="Панель управления изданиями" Margin="10 10 10 0"/>
         <DockPanel DockPanel.Dock="Top" Margin="10">
