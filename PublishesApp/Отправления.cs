@@ -42,7 +42,7 @@ namespace PublishesApp
         }
         public string Примерная_дата
         {
-            get {  return Подписки.ФорматированнаяДата(this.Предполагаемая_дата); }
+            get { return Подписки.ФорматированнаяДата(this.Предполагаемая_дата); }
         }
         public string Дата
         {
@@ -58,7 +58,6 @@ namespace PublishesApp
         {
             get { return this.Подписки.Способ_доставки; }
         }
-    
         public virtual Подписки Подписки { get; set; }
     }
 }

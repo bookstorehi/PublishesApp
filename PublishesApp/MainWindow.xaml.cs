@@ -89,19 +89,25 @@ namespace PublishesApp
             MessageBoxResult question = MessageBox.Show($"Отменить подписку?\nИздание: {podpiska.Издания.Названия}\nОрганизация: {podpiska.Организация}", "Отмена подписки", MessageBoxButton.OKCancel);
             if (question == MessageBoxResult.OK)
             {
-                _context.Entry(podpiska).State = System.Data.Entity.EntityState.Deleted;
-                _context.Подписки.Remove(podpiska);
-                _context.SaveChanges();
-
-                if (izdaniyaGrid.SelectedItem != null)
+                try
                 {
-                    Издания izdanie = izdaniyaGrid.SelectedItems[0] as Издания;
-                    podpiskiGrid.ItemsSource = _context.Подписки.Where(x => x.Индекс_издания == izdanie.Индекс).ToList();
+                    _context.Entry(podpiska).State = System.Data.Entity.EntityState.Deleted;
+                    _context.Подписки.Remove(podpiska);
+                    _context.SaveChanges();
+
+                    if (izdaniyaGrid.SelectedItem != null)
+                    {
+                        Издания izdanie = izdaniyaGrid.SelectedItems[0] as Издания;
+                        podpiskiGrid.ItemsSource = _context.Подписки.Where(x => x.Индекс_издания == izdanie.Индекс).ToList();
+                    }
+                    else
+                        podpiskiGrid.ItemsSource = _context.Подписки.ToList();
                 }
-                else
-                    podpiskiGrid.ItemsSource = _context.Подписки.ToList();
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
-            
         }
 
         private void podpiskiBtn_Click(object sender, RoutedEventArgs e)

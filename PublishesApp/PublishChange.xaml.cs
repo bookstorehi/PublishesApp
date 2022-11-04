@@ -27,7 +27,7 @@ namespace PublishesApp
             _publish = publish;
             _window = window;
 
-            publishIndex.Content = publish.Индекс;
+            publishIndex.Content = "Индекс издания: " + publish.Индекс;
 
             nameBtn.Text = publish.Названия;
 

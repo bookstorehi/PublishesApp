@@ -34,7 +34,6 @@ namespace PublishesApp
                     return "нет в наличии";
             }
         }
-    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Подписки> Подписки { get; set; }
     }

@@ -60,7 +60,6 @@ namespace PublishesApp
         public virtual Издания Издания { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Отправления> Отправления { get; set; }
-
         public string ФорматированнаяДата(DateTime d)
         {
             string day;
